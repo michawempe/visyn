@@ -1,0 +1,118 @@
+.percent-bar {
+  display: grid;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.percent-bar-left {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--slider-height);
+  border: 2.5px solid;
+  color: var(--outline);
+  border-radius: var(--border-radius);
+  background-color: var(--background);
+}
+
+.percent-bar-right {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  height: var(--slider-height);
+  border: 2.5px solid;
+  color: var(--outline);
+  border-radius: var(--border-radius);
+  background-color: var(--background);
+}
+
+.range_container {
+  display: grid;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: all;
+  width: 50px;
+  height: 40px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+input {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 40px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: transparent;
+  pointer-events: none;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.slider-icon {
+  height: 15px;
+  padding: 10px;
+}
+
+.sliderSpan {
+  border: 2.5px solid;
+  color: var(--outline);
+  border-radius: var(--border-radius);
+  background-color: var(--background);
+  height: 10px;
+  width: 100%;
+  margin-top: 13px;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.sliders_control {
+  grid-column: 1;
+  grid-row: 1;
+  display: grid;
+}
+
+.sliderBox {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.sliderBoxRange {
+  border: 2.5px solid;
+  color: var(--outline);
+  border-radius: var(--border-radius);
+  background-color: var(--button);
+  height: var(--slider-height);
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  justify-content: space-between;
+  min-width: 15%;
+  margin-top: 2px;
+}
+
+
+.slider-icon {
+  border: 2.5px solid;
+  color: var(--outline);
+  border-radius: var(--border-radius);
+  background-color: var(--button);
+  height: var(--slider-height);
+  width: 20px;
+  height: 15px;
+}
+
+.slider-icon-range {
+  height: 14px;
+  padding: 8px;
+}

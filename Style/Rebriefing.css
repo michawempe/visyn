@@ -1,0 +1,19 @@
+.rebriefing-box {
+    width: 400px;
+    height : fit-content;
+    border: 2.5px solid;
+    color: var(--outline);
+    border-radius: var(--border-radius);
+    background-color: var(--background);
+    padding: 17px 30px 0px 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .close-rebriefing {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 25px;
+    padding: 25px;
+  }

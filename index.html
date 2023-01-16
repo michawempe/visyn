@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <title>ViSyn</title>
+
+    <link rel="icon" type="image/x-icon" href="public/Favicon_ViSyn.png" />
+
+    <link rel="stylesheet" href="Style/slider.css" />
+    <link rel="stylesheet" href="Style/Rebriefing.css" />
+    <link rel="stylesheet" href="Style/style.css" />
+    <link rel="stylesheet" href="Style/font.css" />
+    <link rel="stylesheet" href="Style/global.css" />
+  </head>
+  <body>
+    <div class="interface">
+      <div class="navigation-bar">
+        <b class="visyn">ViSyn</b>
+        <div class="navigation" id="navigation">
+          <b class="navElement outline">Briefing</b>
+          <b class="navElement">Medium</b>
+          <b class="navElement">Konzept</b>
+          <b class="navElement">Gestaltung</b>
+          <b class="navElement outline" id="indexStatus">8 von ~12</b>
+        </div>
+
+        <div class="rebriefing-buttons open grayedOutFirstPages" id="rebriefing-buttons" onclick="classReBriefingOpen()">
+          <div class="prozent-icon outline">
+            <img style="height: 30px" src="public/union.svg" />
+            <b class="prozent">81%</b>
+            <img src="public/union1.svg" />
+            <b class="prozent">77%</b>
+          </div>
+          <button class="interface-button">
+            <img style="height: 30px" src="public/rebriefing-icon.svg" />
+          </button>
+        </div>
+
+        <div class="rebriefing-box closed" id="rebriefing-interface">
+          <img class="close-rebriefing" src="public/close.svg" onclick="classReBriefingClose()" />
+          <b class="headline">Zielgruppe</b>
+
+          <div>
+            <b>Zielgruppenansprache</b>
+            <div class="percent-bar">
+              <div class="percent-bar-right"></div>
+              <div class="percent-bar-left" style="width: 81%">81%</div>
+            </div>
+          </div>
+
+          <div>
+            <b>Zielgruppenalter (unter 6 - über 80)</b>
+            <div class="range_container">
+              <div class="sliderSpan"></div>
+              <div class="sliders_control">
+                <div class="sliderBoxRange" id="sliderBox0">
+                  <img class="slider-icon-range" src="public/group-243.svg" />
+                  <img class="slider-icon-range" src="public/group-243.svg" />
+                </div>
+                <input id="fromSlider0" type="range" value="25" min="0" max="100" />
+                <input id="toSlider0" type="range" value="85" min="0" max="100" />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <b>Grundorientierung (traditionell - progressiv)</b>
+            <div class="range_container">
+              <div class="sliderSpan"></div>
+              <div class="sliders_control">
+                <div class="sliderBoxRange" id="sliderBox1">
+                  <img class="slider-icon-range" src="public/group-243.svg" />
+                  <img class="slider-icon-range" src="public/group-243.svg" />
+                </div>
+                <input id="fromSlider1" type="range" value="50" min="0" max="100" />
+                <input id="toSlider1" type="range" value="90" min="0" max="100" />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <b>sozialer Stand (Unterschicht - Oberschicht)</b>
+            <div class="range_container">
+              <div class="sliderSpan"></div>
+              <div class="sliders_control">
+                <div class="sliderBoxRange" id="sliderBox2">
+                  <img class="slider-icon-range" src="public/group-243.svg" />
+                  <img class="slider-icon-range" src="public/group-243.svg" />
+                </div>
+                <input id="fromSlider2" type="range" value="10" min="0" max="100" />
+                <input id="toSlider2" type="range" value="80" min="0" max="100" />
+              </div>
+            </div>
+          </div>
+
+          <b class="headline">Unternehmen</b>
+          <div>
+            <b>Gegensatz zur Konkurrenz</b>
+            <div class="percent-bar">
+              <div class="percent-bar-right"></div>
+              <div class="percent-bar-left" style="width: 77%">77%</div>
+            </div>
+          </div>
+
+          <div>
+            <b>Emotionalität (sachlich - persönlich)</b>
+            <div class="range_container">
+              <div class="sliderSpan"></div>
+              <div class="sliders_control">
+                <div class="sliderBox" id="valBox0">
+                  <img class="slider-icon" src="public/left-right-slider.svg" />
+                </div>
+                <input id="valSlider0" type="range" value="50" min="0" max="100" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-buttons grayedOutFirstPages" id="input-buttons">
+        <button class="button-margin wide-button">
+          <textarea
+            id="left-inputSide"
+            coloms="7"
+            rows="1"
+            id="textfeld"
+            rows="{1}"
+            cols="{1}"
+            placeholder="Hier kannst Du mir gerne Fragen stellen."
+            v-model="form.content"
+            @keydown.enter.exact.prevent="submit()"
+          ></textarea>
+        </button>
+
+        <button class="interface-button" id="right-inputSide" onclick="classToggleIcon()">
+          <img id="iconVoice" src="public/group-10.svg" />
+          <img id="iconTextSend" style="height: 28px; padding: 10px 30px" class="closed" src="public/textSend.svg" onclick="textReadButton()" />
+          <img id="iconVoiceSend" style="padding: 10px 30px" class="closed" src="public/voiceSend.svg" onclick="textReadButton()" />
+        </button>
+      </div>
+
+      <button class="interface-button rauszoomen grayedOutFirstPages" id="rauszoomen" onclick="zoom()">
+        <img style="height: 31px" src="public/rauszoomen.svg" />
+      </button>
+    </div>
+
+    <div class="output-box output-box-wide">
+      <div>
+        <div class="output-text" id="output-text1">Willkommen! Ich bin ViSyn dein persönlicher Design-Agent. Ich werde Dich durch die folgenden Schritte bis zum fertigen Design führen.</div>
+        <div class="output-text closed" id="output-text2">
+          Um die Designs auf Dich anzupassen. Möchte ich mir deine Social Media Profile anschauen. Um so mehr Du angibst, umso besser wird das Ergebnis sein.
+        </div>
+        <div class="output-text closed" id="output-text3">Alles klar. Ich sehe, dass eher ältere Leute deiner Konkurrenz besuchen. Was hältst Du von der Idee junge Personen anzusprechen?</div>
+        
+        <div class="visyn-charakter-container" id="visynCrkr">
+          <div class="visyn-charakter" id="visyn-charakter-briefing"></div>
+        </div>
+      </div>
+      <button id="losGehts" onclick="pageChange()">
+        <b>Los geht's</b>
+      </button>
+    </div>
+
+    <div id="page0" class="center">
+      <div class="some closed">
+        <div class="some-box">
+          <b class="heading">eigenes Social Media</b>
+          <div class="SoMe-input">
+            <div id="eigenesSoMe0" class="outline closed">Instagram</div>
+            <div id="eigenesSoMe1" class="outline closed">LinkedIn</div>
+            <div id="eigenesSoMe2" class="outline closed">Twitter</div>
+            <!--  <div class="outline">LinkedIn</div> -->
+            <button class="interface-button" onclick="eigenesPlusButton()">
+              <img style="height: 20px" alt="" src="public/vector-4.svg" />
+            </button>
+          </div>
+        </div>
+
+        <div class="some-box">
+          <b class="heading">Unternehmen Social Media</b>
+          <div class="SoMe-input">
+            <div id="unternehmenSoMe0" class="outline closed">LinkedIn</div>
+            <div id="unternehmenSoMe1" class="outline closed">Twitter</div>
+            <div id="unternehmenSoMe2" class="outline closed">Instagram</div>
+            <button class="interface-button" onclick="unternehmenPlusButton()">
+              <img style="height: 20px" alt="" src="public/vector-4.svg" />
+            </button>
+          </div>
+        </div>
+        <button onclick="pageChange()">
+          <b>Weiter zu den Fragen</b>
+        </button>
+      </div>
+    </div>
+
+    <div id="page1" class="center closed"></div>
+
+    <div id="page2" class="closed">
+      <div id="output-box-content" class="output-box visynanimateout">
+        <div class="output-text-content" id="output-load-content0">
+          <p>Ich gebe Dir jetzt ein kleines Feedback dazu, was ich bisher gelernt habe.</p>
+          <p>Du hast eine Bäckerei in Mainz eröffnet und möchtest daher den Laden bewerben. Um eine erste Sichtbarkeit zu erreichen.</p>
+          <p>Um Dich von der Konkurrenz abzuheben, möchtest Du jüngere Personen ansprechen.</p>
+          <p>Es macht sicherlich Sinn eher lokal werben. Da Du nur in Mainz eine Bäckerei hast.</p>
+          <p>
+            Für mehr Informationen zu dem Gelernten, kannst Du auf den Re-Briefing Button oben rechts klicken. Dort kannst Du auch deine Zielgruppe und Emotionalität der Ansprache an die Kund*innen
+            genauer diffinieren.
+          </p>
+          <p>Gleich zeige ich Dir eine Auswahl an Medien, die sehr gut zu deinem Ziel passen.</p>
+        </div>
+        <div class="output-text-content" id="output-text-content0">
+          <p>Die Social Media Kampagne macht Sinn, denn Du weißt genau wen Du ansprechen möchtest. Man kann nämlich beispielsweise Altersgruppen auswählen.</p>
+          <p>
+            Plakate passen gut zu deiner Bäckerei, denn viele werden die Plakate sehen und interessiert sein, was hinter dem neuen Bäcker steckt. Der Nachteil ist, dass das Drucken und Aufhängen recht
+            teuer ist.
+          </p>
+          <p>
+            Der Flyer könnte auch gut passen, denn damit kannst Du Dich den potenziellen Kunden vorstellen. Die Flyer müssen aber auch gedruckt und ausgeteilt werden. Und es entsteht viel Müll, da der
+            Flyer von uninteressieren Personen wahrscheinlich direkt weggeschmissen wird.
+          </p>
+          <p>Wähle einfach das Medium aus, welches Dir am Besten gefällt, indem Du auf das jeweilige klickst. Falls Du Fragen zu den Medien hast, kannst Du gerne die Chatfunktion nutzen.</p>
+        </div>
+
+        <div class="output-text-content" id="output-load-content1">
+          <p>
+            Gleich kannst Du über die Konzeption der Social Media Kampagne entscheiden. Dabei musst Du Dich nur auf die Idee konzentrieren. Über den genauen Inhalt und die Gestaltung kannst Du später
+            entscheiden.
+          </p>
+        </div>
+        <div class="output-text-content" id="output-text-content1">
+          <p>
+            Memes zu posten passt sehr gut zu der jungen Zielgruppe. Zudem gibt es mehr Aufmerksamkeit. Als eine Werbung, die als solche aussieht. Die Gefahr wäre, dass damit deine Bäckerei nicht
+            ernst genommen wird und es als unseriös empfunden wird.
+          </p>
+          <p>
+            Mehrere Post über deine Arbeit und was sie besonders macht, wird sicherlich gut funktionieren. Dadurch lernen die Nutzer*innen Dich etwas kennen und sehen was deine Teigwaren besonders machen.
+          </p>
+          <p>
+            Einen Post mit einer kurzen Ansprache ist eine gute Idee, da Du sehr schnell das ausdrücken kannst, was Du vermutlich möchtest. Nämlich, dass Personen vorbei kommen und deine Bäckerei
+            austesten.
+          </p>
+          <p>
+            Jetzt kannst Du gerne die Vorschläge bewerten. Ganz rechts heißt, dass es übernommen wird. Wenn Du noch nicht komplett zufrieden bist. Werden anhand deiner Angaben neue Vorschläge
+            erstellt.
+          </p>
+        </div>
+
+        <div class="output-text-content" id="output-load-content2">
+          <p>Du hast den Post mit der kurzer Ansprache ausgewählt.</p>
+          <p>Folgend geht es um den Inhalt bzw. was auf dem Post stehen soll. Dort hast Du wieder mehrere Auswahlmöglichkeiten</p>
+        </div>
+        <div class="output-text-content" id="output-text-content2">
+          <p>Die erste Option wäre kurz eine der Vorteile von deiner Bäckerei auf zu zeigen. Dies wäre eher informativ.</p>
+          <p>Eine direkte Ansprache mit einer Handlungsaufforderung. Kann sehr gut funktionieren, da der potenzielle Kunde sofort weiß von ihm gewollt wird. Es kann aber übergriffig wirken.</p>
+          <p>Ein Post bei dem Du Dich selbst vorstellst, wirkt sehr persönlich für die Nutzer*innen. Dadurch bekommst aber eher Du als das Produkt die Aufmerksamkeit.</p>
+          <p>Jetzt kannst Du gerne die Vorschläge bewerten.</p>
+        </div>
+
+        <div class="output-text-content" id="output-load-content3">
+          <p>Du hast für den Inhalt die direkte Ansprache ausgewählt.</p>
+          <p>
+            Gleich folgt die Entscheidung über die Gestaltung. Dabei wurde auf dein Corporate Design geachtet und verschiedene Abwandlungen erstellt, in die es gehen könnte. Danach kannst Du mir
+            Feedback zu Details geben, wenn Dir eine Richtung grundsätzlich gut gefällt.
+          </p>
+        </div>
+        <div class="output-text-content" id="output-text-content3">
+          <p>Die erste Option ist die cleane Gestaltung. Die Nutzer*innen sehen zwar schnell, welche Botschaft transportert werden soll. Dafür ich aber kein Raum für weitere Gestaltungselemente.</p>
+          <p>Als nächstes schlage ich eine zeitlose Gestaltung vor. Diese ist etwas klassischer. Aber auch gleichzeitlich sehr universell.</p>
+          <p>Bei der letzten Option habe ich Muster hinzugefügt und auf dem Post verteilt. Damit wirkt es verspielt.</p>
+        </div>
+
+        <div class="output-text-content" id="output-load-content4">
+          <p>Du hast Dich für die letzte Variante entschieden, der frischen Gestaltung.</p>
+          <p>
+            Es folgt das Detailfeedback. Hierbei kannst Du frei Änderungsvorschläge äußern. Woraufhin ich es änder oder einen Gegenvorschlag mache, wenn ich denke, dass die Qualität dadurch in Gefahr
+            geraten könnte.
+          </p>
+          <p>
+            Wenn Du auf die Gestaltung klickst, kannst Du auch Elemente mit einer Zeichnung markieren oder Elemente mit Pfeilen verschieben. Du kannst sogar aufzeichnen wo Du ein Element haben
+            möchtest.
+          </p>
+          <p>Falls Du eine vorherige Version besser fandest, kannst Du auch zurück scrollen und von da aus fortfahren.</p>
+          <p>Zum Navigieren kannst Du auch den Button unten links nutzen. Dieser zoomt für einen Überblick heraus und beim Klicken auf eines der Elemente zoomst Du automatisch zu der passenden Position herein.</p>
+        </div>
+        <div class="output-text-content" id="output-text-content4">
+          <p>Du kannst mir gerne ein Feedback dazu geben. Indem Du die Chatfunktion nutzt.</p>
+        </div>
+
+        <div class="output-text-content" id="output-load-content5"></div>
+        <div class="output-text-content" id="output-text-content5">
+          <p>Das Logo ist jetzt nach links gesetzt.</p>
+        </div>
+
+        <div class="output-text-content" id="output-load-content6"></div>
+        <div class="output-text-content" id="output-text-content6">
+          <p>Der Text ist umgeändert. Ich bin jetzt auf Dein Sortiment eingegangen.</p>
+        </div>
+
+        <div class="output-text-content" id="output-load-content7"></div>
+        <div class="output-text-content" id="output-text-content7">
+          <p>Ja, das passt auch gut zu deinem Unternehmen. Ich habe es geändert.</p>
+        </div>
+
+        <div class="output-text-content" id="output-load-content8"></div>
+        <div class="output-text-content" id="output-text-content8">
+          <p>Du hast bei deinem Social Media Posts die helle Farbe noch nicht benutzt. Aber es macht trotzdem Sinn, den Hintergrund heller zu färben.</p>
+        </div>
+
+        <div class="output-text-content" id="output-load-content9"></div>
+        <div class="output-text-content" id="output-text-content9">
+          <p>Ich denke die Qualität der Gestaltung könnte sinken, da die Gestaltung so unausgewogen wirkt.</p>
+        </div>
+
+        <div class="output-text-content" id="output-load-content10"></div>
+        <div class="output-text-content" id="output-text-content10">
+          <p>Ich bin wieder auf die vorherige Version zurückgesprungen. Wie findest Du die Gestaltung jetzt?</p>
+        </div>
+
+        <div class="output-text-content" id="output-load-content11"></div>
+        <div class="output-text-content" id="output-text-content11">
+          <p>Die Schrift ist jetzt etwas größer. Ich denke die Schrift ist jetzt recht eingequetscht. Ich würde die vorherige Version empfehlen.</p>
+        </div>
+
+        <div class="output-text-content" id="output-load-content12"></div>
+        <div class="output-text-content" id="output-text-content12">
+          <p>So finde ich es besser als die vorherige Version. Findest Du diese Gestaltung besser?</p>
+        </div>
+
+        <div class="output-text-content" id="output-load-content13"></div>
+        <div class="output-text-content" id="output-text-content13">
+          <p>Ich bin wieder auf die vorherige Version zurückgesprungen. Wie findest Du die Gestaltung jetzt?</p>
+        </div>
+
+        <div class="output-text-content" id="output-load-content14"></div>
+        <div class="output-text-content" id="output-text-content14">
+          <p>Die Schrift ist nach unten gesetzt. Bist Du mit dieser Gestaltung zufrieden?</p>
+        </div>
+
+        <div class="output-text-content" id="output-load-content15">
+          <p>Du scheinst jetzt mit der Social Media Kampagne zufrieden zu sein.</p>
+          <p>Gleich kannst Du deine Post herunterladen und auf deinen Social Media Kanälen posten.</p>
+        </div>
+        <div class="output-text-content" id="output-text-content15">
+          <p>Hier kannst Du jetzt deinen Post als Bild herunterladen. Der Beschreibungstext ist als Textdatei dabei.</p>
+        </div>
+
+        <p id="output-answer-content0" style="display: none">Das Logo würde mir denke ich links besser gefallen.</p>
+        <p id="output-answer-content1" style="display: none">Kannst Du bei dem Text mehr auf unser Sortiment eingehen?</p>
+        <p id="output-answer-content2" style="display: none">Wir duzen unsere Kunden. Kannst Du das ändern?</p>
+        <p id="output-answer-content3" style="display: none">Macht es Sinn den Hintergrund heller zu machen, damit der Kontrast höher ist?</p>
+        <p id="output-answer-content4" style="display: none">Es könnte mir vielleicht besser gefallen, wenn Du das Baguette rechts ist.</p>
+        <p id="output-answer-content5" style="display: none">Ja, ich fand es vorher auch besser.</p>
+        <p id="output-answer-content6" style="display: none">Könntest Du die Schrift etwas größer machen?</p>
+        <p id="output-answer-content7" style="display: none">Etwas kleiner vielleicht?</p>
+        <p id="output-answer-content8" style="display: none">Ich fand es ohne Vergrößerung besser.</p>
+        <p id="output-answer-content9" style="display: none">Der Text könnte denke ich noch etwas weiter nach unten.</p>
+        <p id="output-answer-content10" style="display: none">So finde ich es gut.</p>
+
+        <div class="visyn-charakter-container">
+          <div class="visyn-charakter" id="visyn-charakter"></div>
+        </div>
+      </div>
+
+      <div class="content-board">
+        <div class="content-board-part closed" id="content-board-part0">
+          <div class="content-container">
+            <div class="content" onclick="textRead()">
+              <img class="content-img" src="public/1_Medium_1.png" />
+              <b class="headline">Social Media Kampagne</b>
+              <b class="input-text">Passend</b>
+              <div class="percent-bar">
+                <div class="percent-bar-right"></div>
+                <div class="percent-bar-left" style="width: 90%">90%</div>
+              </div>
+              <b class="input-text">Kosten pro erreichte Person</b>
+              <div class="percent-bar">
+                <div class="percent-bar-right"></div>
+                <div class="percent-bar-left" style="width: 40%">40%</div>
+              </div>
+            </div>
+            <div class="content" onclick="textRead()">
+              <img class="content-img" src="public/1_Medium_2.png" />
+              <b class="headline">Plakat</b>
+              <b class="input-text">Passend</b>
+              <div class="percent-bar">
+                <div class="percent-bar-right"></div>
+                <div class="percent-bar-left" style="width: 85%">85%</div>
+              </div>
+              <b class="input-text">Kosten pro erreichte Person</b>
+              <div class="percent-bar">
+                <div class="percent-bar-right"></div>
+                <div class="percent-bar-left" style="width: 65%">65%</div>
+              </div>
+            </div>
+            <div class="content" onclick="textRead()">
+              <img class="content-img" src="public/1_Medium_3.png" />
+              <b class="headline">Flyer</b>
+              <b class="input-text">Passend</b>
+              <div class="percent-bar">
+                <div class="percent-bar-right"></div>
+                <div class="percent-bar-left" style="width: 65%">65%</div>
+              </div>
+              <b class="input-text">Kosten pro erreichte Person</b>
+              <div class="percent-bar">
+                <div class="percent-bar-right"></div>
+                <div class="percent-bar-left" style="width: 55%">55%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-board-part closed" id="content-board-part1">
+          <div class="content-container">
+            <div class="content">
+              <img class="content-img" src="public/2_Konzeption_1.png" />
+              <b class="headline">Memes</b>
+              <div class="text-space-between">
+                <b class="input-text">Gefällt mir nicht</b>
+                <b class="input-text">Gefällt mir</b>
+              </div>
+              <div class="range_container">
+                <div class="sliderSpan"></div>
+                <div class="sliders_control">
+                  <div class="sliderBox" id="valBox1">
+                    <img class="slider-icon" src="public/left-right-slider.svg" />
+                  </div>
+                  <input id="valSlider1" type="range" value="50" min="0" max="100" />
+                </div>
+              </div>
+            </div>
+            <div class="content">
+              <img class="content-img" src="public/2_Konzeption_2.png" />
+              <b class="headline">Post über deine Arbeit</b>
+              <div class="text-space-between">
+                <b class="input-text">Gefällt mir nicht</b>
+                <b class="input-text">Gefällt mir</b>
+              </div>
+              <div class="range_container">
+                <div class="sliderSpan"></div>
+                <div class="sliders_control">
+                  <div class="sliderBox" id="valBox2">
+                    <img class="slider-icon" src="public/left-right-slider.svg" />
+                  </div>
+                  <input id="valSlider2" type="range" value="50" min="0" max="100" />
+                </div>
+              </div>
+            </div>
+            <div class="content">
+              <img class="content-img" src="public/1_Medium_1.png" />
+              <b class="headline">Post mit Ansprache</b>
+              <div class="text-space-between">
+                <b class="input-text">Gefällt mir nicht</b>
+                <b class="input-text">Gefällt mir</b>
+              </div>
+              <div class="range_container">
+                <div class="sliderSpan"></div>
+                <div class="sliders_control">
+                  <div class="sliderBox" id="valBox3">
+                    <img class="slider-icon" src="public/left-right-slider.svg" />
+                  </div>
+                  <input id="valSlider3" type="range" value="50" min="0" max="100" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <button onclick="textRead()">
+            <b>Weiter zu der Auswertung</b>
+          </button>
+        </div>
+
+        <div class="content-board-part closed" id="content-board-part2">
+          <div class="content-container">
+            <div class="content">
+              <img class="content-img" src="public/3_Inhalt_1.png" />
+              <b class="headline">Vorteile aufzeigen</b>
+              <div class="text-space-between">
+                <b class="input-text">Gefällt mir nicht</b>
+                <b class="input-text">Gefällt mir</b>
+              </div>
+              <div class="range_container">
+                <div class="sliderSpan"></div>
+                <div class="sliders_control">
+                  <div class="sliderBox" id="valBox4">
+                    <img class="slider-icon" src="public/left-right-slider.svg" />
+                  </div>
+                  <input id="valSlider4" type="range" value="50" min="0" max="100" />
+                </div>
+              </div>
+            </div>
+            <div class="content">
+              <img class="content-img" src="public/1_Medium_1.png" />
+              <b class="headline">Animierend</b>
+              <div class="text-space-between">
+                <b class="input-text">Gefällt mir nicht</b>
+                <b class="input-text">Gefällt mir</b>
+              </div>
+              <div class="range_container">
+                <div class="sliderSpan"></div>
+                <div class="sliders_control">
+                  <div class="sliderBox" id="valBox5">
+                    <img class="slider-icon" src="public/left-right-slider.svg" />
+                  </div>
+                  <input id="valSlider5" type="range" value="50" min="0" max="100" />
+                </div>
+              </div>
+            </div>
+            <div class="content">
+              <img class="content-img" src="public/3_Inhalt_3.png" />
+              <b class="headline">Persönliche Ansprache</b>
+              <div class="text-space-between">
+                <b class="input-text">Gefällt mir nicht</b>
+                <b class="input-text">Gefällt mir</b>
+              </div>
+              <div class="range_container">
+                <div class="sliderSpan"></div>
+                <div class="sliders_control">
+                  <div class="sliderBox" id="valBox6">
+                    <img class="slider-icon" src="public/left-right-slider.svg" />
+                  </div>
+                  <input id="valSlider6" type="range" value="50" min="0" max="100" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <button onclick="textRead()">
+            <b>Weiter zu der Auswertung</b>
+          </button>
+        </div>
+
+        <div class="content-board-part closed" id="content-board-part3">
+          <div class="content-container">
+            <div class="content">
+              <img class="content-img" src="public/4_Gestaltung_1.png" />
+              <b class="headline">Clean</b>
+              <div class="content-input">
+                <div class="text-space-between">
+                  <b class="input-text">Gefällt mir nicht</b>
+                  <b class="input-text">Gefällt mir</b>
+                </div>
+                <div class="range_container">
+                  <div class="sliderSpan"></div>
+                  <div class="sliders_control">
+                    <div class="sliderBox" id="valBox7">
+                      <img class="slider-icon" src="public/left-right-slider.svg" />
+                    </div>
+                    <input id="valSlider7" type="range" value="50" min="0" max="100" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="content">
+              <img class="content-img" src="public/4_Gestaltung_2.png" />
+              <b class="headline">Zeitlos</b>
+              <div class="content-input">
+                <div class="text-space-between">
+                  <b class="input-text">Gefällt mir nicht</b>
+                  <b class="input-text">Gefällt mir</b>
+                </div>
+                <div class="range_container">
+                  <div class="sliderSpan"></div>
+                  <div class="sliders_control">
+                    <div class="sliderBox" id="valBox8">
+                      <img class="slider-icon" src="public/left-right-slider.svg" />
+                    </div>
+                    <input id="valSlider8" type="range" value="50" min="0" max="100" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="content">
+              <img class="content-img" src="public/1_Medium_1.png" />
+              <b class="headline">Frisch</b>
+              <div class="content-input">
+                <div class="text-space-between">
+                  <b class="input-text">Gefällt mir nicht</b>
+                  <b class="input-text">Gefällt mir</b>
+                </div>
+                <div class="range_container">
+                  <div class="sliderSpan"></div>
+                  <div class="sliders_control">
+                    <div class="sliderBox" id="valBox9">
+                      <img class="slider-icon" src="public/left-right-slider.svg" />
+                    </div>
+                    <input id="valSlider9" type="range" value="50" min="0" max="100" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button onclick="textRead()">
+            <b>Weiter zu der Auswertung</b>
+          </button>
+        </div>
+        <div class="content-board-part closed" id="content-board-part4">
+          <div class="content-container">
+            <div class="content-alone">
+              <img class="content-img-alone" src="public/5_Feedback-23.png" />
+              <canvas class="content-img-alone" id="drawing-board0" style="background-color: transparent"></canvas>
+            </div>
+          </div>
+          <button style="margin-top: 20px; width: fit-content" id="toolbar0">
+            <b id="clear">Zeichnung löschen</b>
+          </button>
+        </div>
+
+        <div class="content-board-part closed" id="content-board-part5">
+          <div class="content-container">
+            <div class="content-alone">
+              <img class="content-img-alone" src="public/5_Feedback-24.png" />
+              <canvas class="content-img-alone" id="drawing-board1" style="background-color: transparent"></canvas>
+            </div>
+          </div>
+          <button style="margin-top: 20px; width: fit-content" id="toolbar1">
+            <b id="clear">Zeichnung löschen</b>
+          </button>
+        </div>
+
+        <div class="content-board-part closed" id="content-board-part6">
+          <div class="content-container">
+            <div class="content-alone">
+              <img class="content-img-alone" src="public/5_Feedback-25.png" />
+              <canvas class="content-img-alone" id="drawing-board2" style="background-color: transparent"></canvas>
+            </div>
+          </div>
+          <button style="margin-top: 20px; width: fit-content" id="toolbar2">
+            <b id="clear">Zeichnung löschen</b>
+          </button>
+        </div>
+
+        <div class="content-board-part closed" id="content-board-part7">
+          <div class="content-container">
+            <div class="content-alone">
+              <img class="content-img-alone" src="public/5_Feedback-26.png" />
+              <canvas class="content-img-alone" id="drawing-board3" style="background-color: transparent"></canvas>
+            </div>
+          </div>
+          <button style="margin-top: 20px; width: fit-content" id="toolbar3">
+            <b id="clear">Zeichnung löschen</b>
+          </button>
+        </div>
+
+        <div class="content-board-part closed" id="content-board-part8">
+          <div class="content-container">
+            <div class="content-alone">
+              <img class="content-img-alone" src="public/5_Feedback-27.png" />
+              <canvas class="content-img-alone" id="drawing-board4" style="background-color: transparent"></canvas>
+            </div>
+          </div>
+          <button style="margin-top: 20px; width: fit-content" id="toolbar4">
+            <b id="clear">Zeichnung löschen</b>
+          </button>
+        </div>
+
+        <div class="content-board-part closed" id="content-board-part9">
+          <div class="content-container">
+            <div class="content-alone">
+              <img class="content-img-alone" src="public/5_Feedback-28.png" />
+              <canvas class="content-img-alone" id="drawing-board5" style="background-color: transparent"></canvas>
+            </div>
+          </div>
+          <button style="margin-top: 20px; width: fit-content" id="toolbar5">
+            <b id="clear">Zeichnung löschen</b>
+          </button>
+        </div>
+
+        <div class="content-board-part closed" id="content-board-part10">
+          <div class="content-container">
+            <div class="content-alone">
+              <img class="content-img-alone" src="public/5_Feedback-29.png" />
+              <canvas class="content-img-alone" id="drawing-board6" style="background-color: transparent"></canvas>
+            </div>
+          </div>
+          <button style="margin-top: 20px; width: fit-content" id="toolbar6">
+            <b id="clear">Zeichnung löschen</b>
+          </button>
+        </div>
+
+        <div class="content-board-part closed" id="content-board-part11">
+          <div class="content-container">
+            <div class="content-alone">
+              <img class="content-img-alone" src="public/5_Feedback-30.png" />
+              <canvas class="content-img-alone" id="drawing-board7" style="background-color: transparent"></canvas>
+            </div>
+          </div>
+          <button style="margin-top: 20px; width: fit-content" id="toolbar7">
+            <b id="clear">Zeichnung löschen</b>
+          </button>
+        </div>
+
+        <div class="content-board-part closed" id="content-board-part12">
+          <div class="content-container">
+            <div class="content-alone">
+              <img class="content-img-alone" src="public/5_Feedback-31.png" />
+              <canvas class="content-img-alone" id="drawing-board8" style="background-color: transparent"></canvas>
+            </div>
+          </div>
+          <button style="margin-top: 20px; width: fit-content" id="toolbar8">
+            <b id="clear">Zeichnung löschen</b>
+          </button>
+        </div>
+
+        <div class="content-board-part closed" id="content-board-part13">
+          <div class="content-container">
+            <div class="content-alone">
+              <img class="content-img-alone" src="public/5_Feedback-32.png" />
+              <canvas class="content-img-alone" id="drawing-board9" style="background-color: transparent"></canvas>
+            </div>
+          </div>
+          <button style="margin-top: 20px; width: fit-content" id="toolbar9">
+            <b id="clear">Zeichnung löschen</b>
+          </button>
+        </div>
+
+        <div class="content-board-part closed" id="content-board-part14">
+          <div class="content-container">
+            <div class="content-alone">
+              <img class="content-img-alone" src="public/5_Feedback-33.png" />
+              <canvas class="content-img-alone" id="drawing-board10" style="background-color: transparent"></canvas>
+            </div>
+          </div>
+          <button style="margin-top: 20px; width: fit-content" id="toolbar10">
+            <b id="clear">Zeichnung löschen</b>
+          </button>
+        </div>
+
+        <div class="content-board-part closed" id="content-board-part15">
+          <div class="content-container">
+            <div class="content">
+              <img class="content-img-alone" src="public/5_Feedback-34.png" />
+            </div>
+          </div>
+          <button style="margin-top: 20px">
+            <a href="/public/SoMe_Kampagne_FictionalFlour.zip" download>Dateien herunterladen</a>
+          </button>
+        </div>
+
+        <img class="arrow2 closed" id="arrow0" src="public/Arrow-02.svg" />
+        <img class="arrow2 closed" id="arrow1" src="public/Arrow-02.svg" />
+        <img class="arrow2 closed" id="arrow2" src="public/Arrow-02.svg" />
+        <img class="arrow2 closed" id="arrow3" src="public/Arrow-02.svg" />
+        <img class="arrow2 closed" id="arrow4" src="public/Arrow-02.svg" />
+        <img class="arrow2 closed" id="arrow5" src="public/Arrow-02.svg" />
+        <img class="arrow1 closed" id="arrow6" src="public/Arrow-01.svg" />
+        <img class="arrow2 closed" id="arrow7" src="public/Arrow-02.svg" />
+        <img class="arrow2 closed" id="arrow8" src="public/Arrow-02.svg" />
+        <img class="arrow2 closed" id="arrow9" src="public/Arrow-02.svg" />
+        <img class="arrow2 closed" id="arrow10" src="public/Arrow-02.svg" />
+        <img class="arrow3 closed" id="arrow11" src="public/Arrow-03.svg" />
+        <img class="arrow2 closed" id="arrow12" src="public/Arrow-02.svg" />
+        <img class="arrow2 closed" id="arrow13" src="public/Arrow-02.svg" />
+        <img class="arrow2 closed" id="arrow14" src="public/Arrow-02.svg" />
+      </div>
+    </div>
+  </body>
+  <script src="Script/button-toggle.js"></script>
+  <script src="Script/page-change.js"></script>
+  <script src="Script/span-slider.js"></script>
+  <script src="Script/zoom.js"></script>
+  <script src="Script/draw.js"></script>
+  <!--   <script src="Script/read-text.js"></script> -->
+</html>
