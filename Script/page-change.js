@@ -218,7 +218,7 @@ function textRead() {
       document.querySelector("#left-inputSide").value = "";
       if (i == childCount + childCountLoad - 1) {
         setTimeout(function () {
-          document.querySelector("#left-inputSide").value = document.querySelector("#output-answer-content" + (indexText.toString() - 4)).innerHTML;
+          document.querySelector("#left-inputSide").value = document.querySelector("#output-answer-content" + (indexText.toString() - 5)).innerHTML;
         }, delay)
       }
     } else {
