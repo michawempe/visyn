@@ -22,6 +22,12 @@ leftButton.addEventListener("focus", () => {
     iconVoice.classList.toggle("closed");
     iconTextSend.classList.toggle("closed");
   }
+  if (iconVoiceSend.classList != "closed") {
+    iconVoiceSend.classList.add("closed");
+  }
+  if (iconVoice.classList != "closed") {
+    iconVoice.classList.add("closed");
+  }
 });
 
 const rebriefingButtons = document.querySelector("#rebriefing-buttons");

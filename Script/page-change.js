@@ -219,6 +219,7 @@ function textRead() {
       if (i == childCount + childCountLoad - 1) {
         setTimeout(function () {
           document.querySelector("#left-inputSide").value = document.querySelector("#output-answer-content" + (indexText.toString() - 5)).innerHTML;
+          document.querySelector("#left-inputSide").focus();
         }, delay)
       }
     } else {
