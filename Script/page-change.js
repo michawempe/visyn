@@ -23,7 +23,7 @@ const visynCharakterBriefing = document.querySelector("#visyn-charakter-briefing
 //1
 
 //2
-var readSpeed = 60;
+var readSpeed = 10;
 
 document.querySelector("#iconTextSend").addEventListener("click", () => {
   if (index == 2) {
@@ -209,7 +209,7 @@ function textRead() {
       if (i == childCount + childCountLoad - 1) {
         setTimeout(function () {
           visynCharakter.style.animation = "readAnimation 4s linear 1 alternate";
-        }, Math.round(delay / 4000) * 4000);
+        }, delay);
       }
     }
     if (indexText > 3 && indexText < 15) {
