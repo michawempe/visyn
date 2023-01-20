@@ -23,7 +23,7 @@ const visynCharakterBriefing = document.querySelector("#visyn-charakter-briefing
 //1
 
 //2
-var readSpeed = 10;
+var readSpeed = 60;
 
 document.querySelector("#iconTextSend").addEventListener("click", () => {
   if (index == 2) {
