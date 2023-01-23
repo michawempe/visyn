@@ -152,7 +152,6 @@ var indexText = 0;
 
 function textRead() {
   document.querySelector("#content-board-part" + indexText.toString()).classList.toggle("closed");
-  document.querySelector("#arrow" + indexText.toString()).classList.toggle("closedimp");
 
   var delay = 0;
 
@@ -162,6 +161,7 @@ function textRead() {
 
   if (indexText != 0) {
     document.querySelector("#output-text-content" + (indexText.toString() - 1)).classList.add("closed");
+    document.querySelector("#arrow" + (indexText).toString() - 1).classList.toggle("closedimp");
   }
 
   var childCount = document.querySelector("#output-text-content" + indexText.toString()).childElementCount;
