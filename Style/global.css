@@ -312,12 +312,17 @@ textarea::placeholder {
   display: none !important;
 }
 
+.closedimp {
+  display: none !important;
+}
+
 button b {
   font-size: var(--elemente-schrift-size);
   font-family: var(--text);
   color: var(--outline);
   padding: 10px 20px;
 }
+
 button a {
   font-size: var(--elemente-schrift-size);
   font-family: var(--text);

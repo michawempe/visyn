@@ -152,6 +152,7 @@ var indexText = 0;
 
 function textRead() {
   document.querySelector("#content-board-part" + indexText.toString()).classList.toggle("closed");
+  document.querySelector("#arrow" + indexText.toString()).classList.toggle("closedimp");
 
   var delay = 0;
 
