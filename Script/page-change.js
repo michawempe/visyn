@@ -1,11 +1,23 @@
 let index = 0;
 let indexStatus = 1;
+let indexVoice = 0;
 
 const page0 = document.querySelector("#page0");
 const page1 = document.querySelector("#page1");
 const page2 = document.querySelector("#page2");
 
 const navigation = document.querySelector("#navigation");
+
+const durationAudio = [7, 8, 4, 4, 6, 4, 4, 11, 4, 8, 11, 14, 10, 10, 13, 10, 11, 10, 3, 6, 6, 10, 8, 2, 3, 13, 9, 7, 6, 4, 11, 9, 5, 10, 4, 2, 4, 4, 7, 5, 3, 7, 2, 3, 2, 3, 5, 6];
+
+/* for (i = 0; i < 40; i++) {
+  var audioDur = new Audio("public/Audio/text" + i.toString() + ".mp3");
+  audioDur.addEventListener('loadedmetadata', (event) => {
+    durationAudio.push(audioDur.duration);
+  });
+}
+
+console.log(durationAudio); */
 
 // 0
 
@@ -23,7 +35,6 @@ const visynCharakterBriefing = document.querySelector("#visyn-charakter-briefing
 //1
 
 //2
-var readSpeed = 60;
 
 document.querySelector("#iconTextSend").addEventListener("click", () => {
   if (index == 2) {
@@ -38,7 +49,16 @@ document.querySelector("#iconVoiceSend").addEventListener("click", () => {
 
 document.querySelector("#indexStatus").innerHTML = indexStatus + " von ~15";
 
-visynCharakterBriefing.style.animation = "readAnimation 4s linear 2 alternate";
+visynCharakterBriefing.style.animation = "readAnimation 4s linear infinite alternate";
+audio = new Audio("public/Audio/text" + indexVoice.toString() + ".mp3");
+audio.play();
+indexVoice++;
+
+audio.addEventListener("canplaythrough", (event) => {
+  setTimeout(function () {
+    visynCharakterBriefing.style.animation = "readAnimation 4s linear 1 alternate";
+  }, (durationAudio[indexVoice] * 1000));
+});
 
 function pageChange() {
   if (index == 0) {
@@ -55,7 +75,16 @@ function pageChange() {
       visynCharakterBriefing.style.animation = "none";
       visynCharakterBriefing.offsetHeight; /* trigger reflow */
       visynCharakterBriefing.style.animation = null;
-      visynCharakterBriefing.style.animation = "readAnimation 4s linear 3 alternate";
+      visynCharakterBriefing.style.animation = "readAnimation 4s linear infinite alternate";
+      audio = new Audio("public/Audio/text" + indexVoice.toString() + ".mp3");
+      audio.play();
+      indexVoice++;
+
+      audio.addEventListener("canplaythrough", (event) => {
+        setTimeout(function () {
+          visynCharakterBriefing.style.animation = "readAnimation 4s linear 1 alternate";
+        }, (durationAudio[indexVoice] * 1000) + 4500);
+      });
     }, 1000);
 
     outputBox.classList.toggle("visynanimateoutwide");
@@ -80,7 +109,16 @@ function pageChange() {
       visynCharakterBriefing.style.animation = "none";
       visynCharakterBriefing.offsetHeight; /* trigger reflow */
       visynCharakterBriefing.style.animation = null;
-      visynCharakterBriefing.style.animation = "readAnimation 4s linear 2 alternate";
+      visynCharakterBriefing.style.animation = "readAnimation 4s linear infinite alternate";
+      audio = new Audio("public/Audio/text" + indexVoice.toString() + ".mp3");
+      audio.play();
+      indexVoice++;
+
+      audio.addEventListener("canplaythrough", (event) => {
+        setTimeout(function () {
+          visynCharakterBriefing.style.animation = "readAnimation 4s linear 1 alternate";
+        }, (durationAudio[indexVoice] * 1000) + 1500);
+      });
     }, 1000);
 
     outputBox.classList.toggle("visynanimateinwide");
@@ -146,88 +184,91 @@ function textRead() {
     const content = document.querySelector("#content-board-part" + indexText.toString());
 
     const childrenBoxLoad = outBoxLoad.children[i];
+    
     const childrenBox = outBox.children[i - childCountLoad];
 
     const visynCharakter = document.querySelector("#visyn-charakter");
 
     visynCharakter.style.animation = "readAnimation 4s linear infinite alternate";
 
-    if (childCountLoad != 0) {
-      content.style.visibility = "hidden";
+    var durationAudioFor = durationAudio[i + indexVoice];
 
-      if (i == 0) {
-        contentBox.classList.toggle("visynanimateout");
-        contentBox.classList.toggle("visynanimatein");
-        setTimeout(function () {
-          contentBox.classList.toggle("beforevisynanimation");
-        }, 1900);
+      if (childCountLoad != 0) {
+        content.style.visibility = "hidden";
+
+        if (i == 0) {
+          contentBox.classList.toggle("visynanimateout");
+          contentBox.classList.toggle("visynanimatein");
+          setTimeout(function () {
+            contentBox.classList.toggle("beforevisynanimation");
+          }, 1900);
+        }
+
+        if (i < childCountLoad) {
+          setTimeout(function () {
+            childrenBoxLoad.style.display = "block";
+            audio = new Audio("public/Audio/text" + indexVoice.toString() + ".mp3");
+            audio.play();
+            indexVoice++;
+
+
+            for (j = 0; j < childCountLoad; j++) {
+              if (outBoxLoad.children[j].getBoundingClientRect().top < 100) {
+                outBoxLoad.children[j].style.display = "none";
+              }
+            }
+          }, delay);
+
+          delay = delay + (durationAudioFor * 1000) + 1500;
+        }
+
+        if (i == childCountLoad) {
+          setTimeout(function () {
+            outBoxLoad.classList.toggle("closed");
+            contentBox.classList.toggle("visynanimatein");
+            contentBox.classList.toggle("beforevisynanimation");
+            contentBox.classList.toggle("visynanimateout");
+            content.style.visibility = "visible";
+          }, delay);
+        }
       }
 
-      if (i < childCountLoad) {
+      if (i >= childCountLoad) {
         setTimeout(function () {
-          childrenBoxLoad.style.display = "block";
+          childrenBox.style.display = "block";
+          audio = new Audio("public/Audio/text" + indexVoice.toString() + ".mp3");
+            audio.play();
+            indexVoice++;
 
-          for (j = 0; j < childCountLoad; j++) {
-            if (outBoxLoad.children[j].getBoundingClientRect().top < 100) {
-              outBoxLoad.children[j].style.display = "none";
+          for (j = 0; j < childCount; j++) {
+            if (outBox.children[j].getBoundingClientRect().top < 100) {
+              outBox.children[j].style.display = "none";
             }
           }
         }, delay);
 
-        delay = delay + childrenBoxLoad.textContent.length * readSpeed;
-        /* if (i < outBoxLoad.childElementCount - 1) {
-        setTimeout(function () {
-          childrenBoxLoad.style.display = "none";
-        }, delay);
-      } */
-      }
+        delay = delay + (durationAudioFor * 1000) + 1500;
 
-      if (i == childCountLoad) {
-        setTimeout(function () {
-          outBoxLoad.classList.toggle("closed");
-          contentBox.classList.toggle("visynanimatein");
-          contentBox.classList.toggle("beforevisynanimation");
-          contentBox.classList.toggle("visynanimateout");
-          content.style.visibility = "visible";
-        }, delay);
-      }
-    }
-
-    if (i >= childCountLoad) {
-      setTimeout(function () {
-        childrenBox.style.display = "block";
-
-        for (j = 0; j < childCount; j++) {
-          if (outBox.children[j].getBoundingClientRect().top < 100) {
-            outBox.children[j].style.display = "none";
-          }
+        if (i == childCount + childCountLoad - 1) {
+          setTimeout(function () {
+            visynCharakter.style.animation = "readAnimation 4s linear 1 alternate";
+          }, delay);
         }
-      }, delay);
-
-      delay = delay + childrenBox.textContent.length * readSpeed;
-
-      if (i == childCount + childCountLoad - 1) {
-        setTimeout(function () {
-          visynCharakter.style.animation = "readAnimation 4s linear 1 alternate";
-        }, delay);
       }
-    }
-    if (indexText > 3 && indexText < 15) {
-      document.querySelector("#iconVoice").classList.add("closed");
-      document.querySelector("#iconTextSend").classList.remove("closed");
-      document.querySelector("#left-inputSide").value = "";
-      if (i == childCount + childCountLoad - 1) {
-        setTimeout(function () {
-          document.querySelector("#left-inputSide").value = document.querySelector("#output-answer-content" + (indexText.toString() - 5)).innerHTML;
-          document.querySelector("#left-inputSide").focus();
-        }, delay)
+      if (indexText > 3 && indexText < 15) {
+        document.querySelector("#iconVoice").classList.add("closed");
+        document.querySelector("#iconTextSend").classList.remove("closed");
+        document.querySelector("#left-inputSide").value = "";
+        if (i == childCount + childCountLoad - 1) {
+          setTimeout(function () {
+            document.querySelector("#left-inputSide").value = document.querySelector("#output-answer-content" + (indexText.toString() - 5)).innerHTML;
+            document.querySelector("#left-inputSide").focus();
+          }, delay);
+        }
+      } else {
+        document.querySelector("#left-inputSide").value = "";
       }
-    } else {
-      document.querySelector("#left-inputSide").value = "";
-    }
   }
-
-
 
   indexText++;
   indexStatus++;
